@@ -1,0 +1,148 @@
+<html>
+    
+    <head>
+        <script src="./js/jquery.min.js"></script>
+    </head>
+    
+    <style>
+        table,
+        td {
+            border: 2px solid black;
+        }
+    
+        td {
+            width: 17vw;
+            height: 17vw;
+        }
+    
+        .red {
+            background-color: red;
+        }
+    
+        h1 {
+            font-size: 10vw;
+            text-align: center;
+        }
+    
+        img {
+            height: 10vw;
+            width: auto;
+        }
+    
+        text {
+            font-size: 10vw;
+        }
+    
+        .noborder {
+            border: none;
+        }
+    </style>
+    
+    <body>
+        <h1>Clicker Game</h1>
+        <center>
+            <table class="noborder">
+                <tr>
+                    <td class="noborder">
+                        <img src="./img/heart.jpg">
+                    </td>
+                    <td class="noborder">
+                        <text id="healthText">3</text>
+                    </td>
+                    <td class="noborder">
+                        <img src="./img/star.png">
+                    </td>
+                    <td class="noborder">
+                        <text id="scoreText">0</text>
+                    </td>
+                </tr>
+            </table>
+            <table class="gameBoard">
+                <tr>
+                    <td id="11"></td>
+                    <td id="12"></td>
+                    <td id="13"></td>
+                    <td id="14"></td>
+                    <td id="15"></td>
+                </tr>
+                <tr>
+                    <td id="21"></td>
+                    <td id="22"></td>
+                    <td id="23"></td>
+                    <td id="24"></td>
+                    <td id="25"></td>
+                </tr>
+                <tr>
+                    <td id="31"></td>
+                    <td id="32"></td>
+                    <td id="33"></td>
+                    <td id="34"></td>
+                    <td id="35"></td>
+                </tr>
+                <tr>
+                    <td id="41"></td>
+                    <td id="42"></td>
+                    <td id="43"></td>
+                    <td id="44"></td>
+                    <td id="45"></td>
+                </tr>
+                <tr>
+                    <td id="51"></td>
+                    <td id="52"></td>
+                    <td id="53"></td>
+                    <td id="54"></td>
+                    <td id="55"></td>
+                </tr>
+            </table>
+        </center>
+    </body>
+    
+    <script>
+        
+	   let switchInterval = 3000
+	   
+        let health = 3;
+        let score = 0;
+        
+        let redSquareID = "";
+	   
+	   makeRedSquare();
+        let refreshInterval = setInterval(makeRedSquare, 3000);
+	   
+        $(".gameBoard tr td").click(function() {
+            if(this.id == redSquareID){
+                score += 1;
+			 $("#scoreText").text(score);
+		  	 clearInterval(refreshInterval);
+			 makeRedSquare();
+			 refreshInterval = setInterval(makeRedSquare, 3000);
+            }else{
+			 health -= 1;
+			 $("#healthText").text(health);
+		  }
+            console.log("Vajutatud; " + this.id )
+            console.log("Score: " + score);
+        });
+        function getRandomNumber() {
+            return Math.floor(Math.random() * 5) + 1;
+        }
+    
+        function getRandomSquare() {
+            let y = getRandomNumber().toString();
+            let x = getRandomNumber().toString();
+            return y + x;
+        }
+    
+        function makeRedSquare() {
+            $("td").removeClass("red");
+            let id = getRandomSquare();
+            redSquareID = id;
+            $("#" + id).addClass("red");
+        }
+	   
+	   
+    
+    
+    </script>
+    
+    </html>
